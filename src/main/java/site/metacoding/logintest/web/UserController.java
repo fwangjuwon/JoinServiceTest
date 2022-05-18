@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.logintest.config.auth.LoginUser;
 import site.metacoding.logintest.handler.ex.CustomException;
 import site.metacoding.logintest.service.UserService;
 import site.metacoding.logintest.web.dto.JoinReqDto;
@@ -20,13 +23,9 @@ import site.metacoding.logintest.web.dto.JoinReqDto;
 @Controller
 public class UserController {
 
-        private final UserService userService;
+    private final UserService userService;
     
-    @GetMapping("/")
-    public String home() {
-        return "home";
-    }
-
+    
     @GetMapping("/join-form")
     public String joinForm() {
         return "joinForm";
@@ -43,18 +42,19 @@ public class UserController {
     }
 
      @PostMapping("/join")
-    public String join(@Valid JoinReqDto joinReqDto, BindingResult bindingResult) {
+     public String join(@Valid JoinReqDto joinReqDto, BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                errorMap.put(fe.getField(), fe.getDefaultMessage());
-            }
-            throw new CustomException(errorMap.toString());
-        }
+         if (bindingResult.hasErrors()) {
+             Map<String, String> errorMap = new HashMap<>();
+             for (FieldError fe : bindingResult.getFieldErrors()) {
+                 errorMap.put(fe.getField(), fe.getDefaultMessage());
+             }
+             throw new CustomException(errorMap.toString());
+         }
 
-        userService.회원가입(joinReqDto.toEntity());
+         userService.회원가입(joinReqDto.toEntity());
 
-        return "redirect:/login-form";
-    }
+         return "redirect:/login-form";
+     }
+    
 }
