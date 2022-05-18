@@ -12,13 +12,19 @@
 
     <h1>안녕하세요 프로그래머 개또입니다</h1>
     <hr>
+    {{#principal}}
+    <a href="/login-form">
+        <button>로그아웃</button></a>
+    <a href="/s/update-form">
+        <button>회원정보수정</button>
+    </a>
+    {{/principal}}
+    {{^principal}}
     <a href="/login-form">
         <button>로그인</button></a>
     <a href="/join-form">
         <button>회원가입</button></a>
-    <a href="/s/update-form">
-        <button>회원정보수정</button>
-    </a>
+    {{/principal}}
 
 </body>
 

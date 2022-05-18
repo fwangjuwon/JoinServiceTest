@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class UserController {
         return "loginForm";
     }
 
-    @GetMapping("/s/update-form")
-    public String updateForm() {
+    @GetMapping("/user/{id}")
+    public String updateForm(@PathVariable Integer id) {
         return "updateForm";
     }
 

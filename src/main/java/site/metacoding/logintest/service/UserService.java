@@ -18,9 +18,16 @@ public class UserService {
 
     @Transactional
     public void 회원가입(User user) {
-        String rawPassword = user.getPassword(); 
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword); 
+        String rawPassword = user.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword);
         userRepository.save(user);
     }
+    
+       // 회원 탈퇴하기
+    @Transactional
+    public void 회원탈퇴(Integer id) {
+        userRepository.deleteById(id);
+    }
+
 }

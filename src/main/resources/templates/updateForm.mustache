@@ -1,11 +1,12 @@
 <div class="container">
 
     <h1>회원정보수정</h1>
+    <!-- <input id="id" type="hidden" value="{{user.id}}"> -->
 
     <div>
-        <form action="/join" method="post" style="display: flex; flex-direction: column;">
-            <input style="margin-top: 20px;" id="userId" class="my_auth_form_box_input" type="text" name="userId"
-                placeholder="Enter ID" maxlength="20" required />
+        <form style="display: flex; flex-direction: column;">
+            <input style="margin-top: 20px;" id="username" class="my_auth_form_box_input" type="text" name="username"
+                placeholder="아이디" maxlength="20" required readonly />
             <input style="margin-top: 20px;" id="password" class="my_auth_form_box_input" type="password"
                 name="password" placeholder="Enter PASSWORD" maxlength="20" required />
             <input style="margin-top: 20px;" id="same-password" class="my_auth_form_box_input" type="password"
@@ -17,7 +18,26 @@
             <div style="margin-top:20px">
                 <button type="submit" style="background-color: #E1E2E1;" class="btn">회원가입
                 </button>
+                <!-- <button onclick="deleteUser('{{user.id}}')">회원탈퇴</button> -->
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    // 회원 탈퇴 함수
+    async function deleteUser(userId) {
+        let response = await fetch(`/s/api/user/${userId}/delete`, {
+            method: "DELETE",
+        });
+        // console.log(response);
+        let responseParse = await response.json();
+        // console.log(responseParse);
+        if (responseParse.code == 1) {
+            alert("회원탈퇴 성공");
+            location.href = "/";
+        } else {
+            alert("회원탈퇴 실패 : " + responseParse.msg);
+        }
+    }
+</script>
