@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,7 @@ import site.metacoding.logintest.service.UserService;
 import site.metacoding.logintest.util.RespScript;
 import site.metacoding.logintest.util.Script;
 import site.metacoding.logintest.web.dto.ResponseDto;
+import site.metacoding.logintest.web.dto.UpdateDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,6 +40,13 @@ public class UserApiController {
 
         userService.회원탈퇴(id);
         session.invalidate();
+        return new ResponseDto<>(1, "성공", null);
+    }
+
+    
+    @PutMapping("/s/api/user/{id}")
+    public ResponseDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
+        userService.회원수정(id, updateDto);
         return new ResponseDto<>(1, "성공", null);
     }
 

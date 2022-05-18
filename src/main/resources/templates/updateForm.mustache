@@ -18,7 +18,7 @@
             <input style="margin-top: 20px;" class="my_auth_form_box_input" type="text" name="addr"
                 placeholder="Enter ADDRESS" value="{{principal.addr}}" maxlength="120" required />
             <div style="margin-top:20px">
-                <button type="submit" style="background-color: #E1E2E1;" class="btn">수정완료
+                <button id="btn-update" type="button" class="btn">수정완료
                 </button>
                 <button onclick="deleteUser('{{principal.id}}')">회원탈퇴</button>
             </div>
@@ -27,6 +27,37 @@
 </div>
 
 <script>
+
+    $("#btn-update").click(() => {
+        update();
+    });
+
+    //회원 수정 함수 
+    async function update() {
+        let userId = $("#userId").val();
+        let updateDto = {
+            password: $("#password").val(),
+            email: $("#email").val(),
+            addr: $("#addr").val()
+        }
+
+        let response = await fetch(`/s/api/user/${userId}`, {
+            method: "PUT",
+            body: JSON.stringify(updateDto),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        });
+        let responseParse = await response.json();
+
+        if (responseParse.code == 1) {
+            alert("업데이트 성공");
+            location.href = `/user/${userId}`;
+        } else {
+            alert("업데이트 실패");
+        }
+    }
+
     // 회원 탈퇴 함수
     async function deleteUser(userId) {
         let response = await fetch(`/s/api/user/${userId}/delete`, {
