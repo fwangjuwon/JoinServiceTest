@@ -1,0 +1,27 @@
+<h1>로그인</h1>
+
+<!-- 컨테이너 시작 -->
+<div>
+    <!-- 로그인 폼 시작 -->
+    <form action="/login" method="post">
+        <div>
+            <input style="margin-top: 20px;" id="userId" type="text" class="form-control" name="userId"
+                placeholder="Enter ID" value="{{#remember}}{{remember}}{{/remember}}" required maxlength="20">
+        </div>
+        <div>
+            <input style="margin-top: 20px;" id="password" type="password" class="form-control" name="password"
+                placeholder="Enter PASSWORD" required maxlength="20">
+        </div>
+        <div class="form-check">
+            <label>
+                <input style="margin-top: 20px;" name="remember" type="checkbox"> 아이디 기억하기
+            </label>
+        </div>
+        <div style="margin-top: 20px;">
+            <button id="btn-login" type="submit">로그인</button>
+        </div>
+    </form>
+    <!-- 로그인 폼 끝 -->
+</div>
+
+<!-- 컨테이너 끝 -->
