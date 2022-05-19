@@ -1,76 +1,88 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h1>회원정보수정</h1>
-    <input id="userId" type="hidden" value="{{principal.id}}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
 
-    <div>
-        <form style="display: flex; flex-direction: column;">
 
-            <input style="margin-top: 20px;" id="username" type="text" name="username" value="{{principal.username}}"
-                maxlength="20" required readonly />
-            <input style="margin-top: 20px;" id="password" class="my_auth_form_box_input" type="password"
-                name="password" placeholder="Enter New PASSWORD" maxlength="20" required />
-            <input style="margin-top: 20px;" id="same-password" class="my_auth_form_box_input" type="password"
-                placeholder="Check PASSWORD" maxlength="20" required />
-            <input style="margin-top: 20px;" class="my_auth_form_box_input" type="email" name="email"
-                placeholder="Enter EMAIL" value="{{principal.email}}" maxlength="60" required />
+    <div class="container">
 
-            <input style="margin-top: 20px;" class="my_auth_form_box_input" type="text" name="addr"
-                placeholder="Enter ADDRESS" value="{{principal.addr}}" maxlength="120" required />
-            <div style="margin-top:20px">
-                <button id="btn-update" type="button" class="btn">수정완료
-                </button>
-                <button onclick="deleteUser('{{principal.id}}')">회원탈퇴</button>
-            </div>
-        </form>
+        <h1>회원정보수정</h1>
+        <input id="userId" type="hidden" value="{{principal.id}}">
+
+        <div>
+            <form style="display: flex; flex-direction: column;">
+
+                <input style="margin-top: 20px;" id="username" type="text" name="username"
+                    value="{{principal.username}}" maxlength="20" required readonly />
+                <input style="margin-top: 20px;" id="password" class="my_auth_form_box_input" type="password"
+                    name="password" placeholder="Enter New PASSWORD" maxlength="20" required />
+                <input style="margin-top: 20px;" id="same-password" class="my_auth_form_box_input" type="password"
+                    placeholder="Check PASSWORD" maxlength="20" required />
+                <input style="margin-top: 20px;" class="my_auth_form_box_input" type="email" name="email"
+                    placeholder="Enter EMAIL" value="{{principal.email}}" maxlength="60" required />
+
+                <input style="margin-top: 20px;" class="my_auth_form_box_input" type="text" name="addr"
+                    placeholder="Enter ADDRESS" value="{{principal.addr}}" maxlength="120" required />
+                <div style="margin-top:20px">
+                    <button id="btn-update" type="button" class="btn">수정완료
+                    </button>
+                    <button onclick="deleteUser('{{principal.id}}')">회원탈퇴</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-    $("#btn-update").click(() => {
-        update();
-    });
+        $("#btn-update").click(() => {
+            update();
+        });
 
-    //회원 수정 함수 
-    async function update() {
-        let userId = $("#userId").val();
-        let updateDto = {
-            password: $("#password").val(),
-            email: $("#email").val(),
-            addr: $("#addr").val()
-        }
-
-        let response = await fetch(`/s/api/user/${userId}`, {
-            method: "PUT",
-            body: JSON.stringify(updateDto),
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
+        //회원 수정 함수 
+        async function update() {
+            let userId = $("#userId").val();
+            let updateDto = {
+                password: $("#password").val(),
+                email: $("#email").val(),
+                addr: $("#addr").val()
             }
-        });
-        let responseParse = await response.json();
 
-        if (responseParse.code == 1) {
-            alert("업데이트 성공");
-            location.href = `/user/${userId}`;
-        } else {
-            alert("업데이트 실패");
-        }
-    }
+            let response = await fetch(`/s/api/user/${userId}`, {
+                method: "PUT",
+                body: JSON.stringify(updateDto),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            });
+            let responseParse = await response.json();
 
-    // 회원 탈퇴 함수
-    async function deleteUser(userId) {
-        let response = await fetch(`/s/api/user/${userId}/delete`, {
-            method: "DELETE",
-        });
-        // console.log(response);
-        let responseParse = await response.json();
-        // console.log(responseParse);
-        if (responseParse.code == 1) {
-            alert("회원탈퇴 성공");
-            location.href = "/";
-        } else {
-            alert("회원탈퇴 실패 : " + responseParse.msg);
+            if (responseParse.code == 1) {
+                alert("업데이트 성공");
+                location.href = `/user/${userId}`;
+            } else {
+                alert("업데이트 실패");
+            }
         }
-    }
-</script>
+
+        // 회원 탈퇴 함수
+        async function deleteUser(userId) {
+            let response = await fetch(`/s/api/user/${userId}/delete`, {
+                method: "DELETE",
+            });
+            // console.log(response);
+            let responseParse = await response.json();
+            // console.log(responseParse);
+            if (responseParse.code == 1) {
+                alert("회원탈퇴 성공");
+                location.href = "/";
+            } else {
+                alert("회원탈퇴 실패 : " + responseParse.msg);
+            }
+        }
+    </script>

@@ -1,23 +1,53 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h1>회원가입</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
 
-    <div>
-        <form action="/join" method="post" style="display: flex; flex-direction: column;">
-            <input style="margin-top: 20px;" id="username" type="text" name="username" placeholder="Enter ID"
-                maxlength="20" required />
-            <input style="margin-top: 20px;" id="password" type="password" name="password" placeholder="Enter PASSWORD"
-                maxlength="20" required />
-            <input style="margin-top: 20px;" id="same-password" type="password" placeholder="Check PASSWORD"
-                maxlength="20" required />
-            <input style="margin-top: 20px;" type="email" name="email" placeholder="Enter EMAIL" maxlength="60"
-                required />
-            <input style="margin-top: 20px;" type="text" name="addr" placeholder="Enter ADDRESS" maxlength="120"
-                required />
-            <div style="margin-top:20px">
-                <button type="submit" style="background-color: #E1E2E1;">회원가입
-                </button>
-            </div>
-        </form>
+</head>
+
+<body>
+
+
+    <div class="container">
+
+        <h1>회원가입</h1>
+
+        <div>
+            <form action="/join" method="post" style="display: flex; flex-direction: column;">
+                <input style="margin-top: 20px;" id="username" type="text" name="username" placeholder="Enter ID"
+                    maxlength="20" required />
+                <input style="margin-top: 20px;" id="password" type="password" name="password"
+                    placeholder="Enter PASSWORD" maxlength="20" required />
+                <input style="margin-top: 20px;" id="same-password" type="password" placeholder="Check PASSWORD"
+                    maxlength="20" required />
+                <input style="margin-top: 20px;" type="email" name="email" placeholder="Enter EMAIL" maxlength="60"
+                    required />
+                <input id="addr" name="addr" style="margin-top: 20px;" type="text" readonly />
+                <button style="margin-top: 20px;" onclick="goPopup();">주소 검색</button>
+                <div style="margin-top:20px">
+                    <button type="submit" style="background-color: #E1E2E1;">회원가입
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+
+    <script>
+        function goPopup() {
+            let pop = window.open("/juso-popup", "pop", "width=570,height=420, scrollbars=yes, resizable=yes");
+        }
+        function jusoCallBack(roadFullAddr) {
+            alert("되니?")
+            // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+            $("#addr").val(roadFullAddr);
+            alert("콜백하니?")
+        }
+    </script>
+
+</body>
